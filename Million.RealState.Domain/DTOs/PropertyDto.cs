@@ -18,5 +18,5 @@ public record PropertyDto
 
     public string? Image { get; set; }
 
-    public bool? Enabled { get; init; }   
+    public bool Enabled { get; init; }   
 }

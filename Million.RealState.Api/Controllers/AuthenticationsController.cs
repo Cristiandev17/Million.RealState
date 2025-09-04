@@ -11,6 +11,7 @@ namespace Million.RealState.Api.Controllers
     [ApiController]
     public class AuthenticationsController(IMediator _mediator) : ControllerBase
     {
+        // Authenticates a user and returns a JWT token if credentials are valid
         [HttpPost]
         [Route("login")]
         [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.OK)]
@@ -20,13 +21,16 @@ namespace Million.RealState.Api.Controllers
         {
             try
             {
+                // Send authentication command to MediatR handler
                 var response = await _mediator.Send(new AuthenticationCommand(request));
 
+                // Return successful response with JWT token
                 if (response.IsSuccess)
                 {
                     return Ok(response);
                 }
 
+                // Return unauthorized if credentials are invalid
                 return Unauthorized();
             }
             catch (Exception ex)

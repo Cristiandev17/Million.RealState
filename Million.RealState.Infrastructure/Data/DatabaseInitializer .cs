@@ -4,10 +4,13 @@ namespace Million.RealState.Infrastructure.Data;
 
 public class DatabaseInitializer
 {
+    // Initializes the database with seed data if tables are empty
     public static void Initialize(RealStateDbContext context)
     {
+        // Ensure the database is created (if using Code First approach)
         context.Database.EnsureCreated();
 
+        // Seed Owners table if empty
         if (!context.Owners.Any())
         {
             var owners = new List<OwnerEntity>()
@@ -38,8 +41,10 @@ public class DatabaseInitializer
             context.SaveChanges();
         }
 
+        // Seed Properties table if empty
         if (!context.Properties.Any())
         {
+            // Get the first owner to associate properties with
             var owner = context.Owners.First();
             var properties = new List<PropertyEntity>
             {
@@ -71,8 +76,10 @@ public class DatabaseInitializer
             context.SaveChanges();
         }
 
+        // Seed PropertyTraces table if empty
         if (!context.PropertyTraces.Any())
         {
+            // Get the first property to associate traces with
             var property = context.Properties.First();
             var traces = new List<PropertyTraceEntity>
             {
