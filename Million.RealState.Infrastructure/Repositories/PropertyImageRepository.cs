@@ -13,9 +13,13 @@ public class PropertyImageRepository : IPropertyImageRepository
         _context = context;
     }
 
+    // Creates multiple property images in the database in a single operation
     public async Task CreatePropertyImageAsync(List<PropertyImageEntity> newImage)
     {
+        // Add multiple images to the context using AddRange for better performance
         await _context.PropertyImages.AddRangeAsync(newImage);
+
+        // Persist changes to the database
         await _context.SaveChangesAsync();
     }
 }

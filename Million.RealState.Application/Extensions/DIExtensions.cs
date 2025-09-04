@@ -15,16 +15,18 @@ namespace Million.RealState.Application.Extensions;
 
 public static class DIExtensions
 {
+    //Method to register all base services for the application
     public static IServiceCollection BaseRegister(this IServiceCollection services, ConfigurationManager configuration)
     {
         return services
-            .RegisterTools()
-            .RegisterRepositories()
-            .RegisterAuthorization(configuration)
-            .RegisterContextDb(configuration);
+            .RegisterTools() // Register utility tools and frameworks
+            .RegisterRepositories() // Register data repositories
+            .RegisterAuthorization(configuration) // Configure authentication and authorization
+            .RegisterContextDb(configuration); // Register database context
 
     }
 
+    // Registers application tools and frameworks like AutoMapper and MediatR
     private static IServiceCollection RegisterTools(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(PropertyImageMapperProfile), typeof(PropertyMapperProfile));
@@ -33,6 +35,7 @@ public static class DIExtensions
         return services;
     }
 
+    // Registers repository implementations with their interfaces
     private static IServiceCollection RegisterRepositories(this IServiceCollection services)
     {       
         services.AddScoped<IPropertyRepository, PropertyRepository>();
@@ -41,6 +44,7 @@ public static class DIExtensions
         return services;
     }
 
+    // Configures authentication, authorization and CORS policies
     private static IServiceCollection RegisterAuthorization(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddCors(options =>
@@ -80,6 +84,7 @@ public static class DIExtensions
         return services;
     }
 
+    // Registers the database context with SQL Server provider
     private static IServiceCollection RegisterContextDb(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddDbContext<RealStateDbContext>(options =>

@@ -80,4 +80,9 @@ Incluye el token en el encabezado `Authorization` de tus peticiones:
 
 Ahora puedes acceder a los endpoints expuestos por la API.
 
+### Inicializador de Base de Datos
 
+La clase DatabaseInitializer es un componente es utilitado para iniciar automáticamente la base de datos de la
+aplicación con datos iniciales en el momento que la aplicación se inicia por primera vez. Esto garantiza que la aplicación tenga datos básicos para funcionar inmediatamente.
+
+- Ruta del Archivo: Million.RealState.Infrastructure/Data/DatabaseInitializer.cs

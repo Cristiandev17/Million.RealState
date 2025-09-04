@@ -13,6 +13,7 @@ namespace Million.RealState.Api.Controllers;
 [Authorize]
 public class PropertyImagesController(IMediator _mediator) : ControllerBase
 {
+    // Creates new images for a property
     [HttpPost]
     [Route("create")]
     [ProducesResponseType(typeof(ApiResponse<bool>), (int)HttpStatusCode.Created)]
@@ -22,18 +23,22 @@ public class PropertyImagesController(IMediator _mediator) : ControllerBase
     {
         try
         {
+            // Validate the incoming model data
             if (!ModelState.IsValid)
             {
                 return BadRequest(ApiResponse<object>.ErrorResult(Constants.Invalid, Constants.ValidError));
-            }                    
+            }
 
+            // Send command to create property images via MediatR
             var result = await _mediator.Send(new CreateImageOfPropertyCommand(newImages));
 
+            // Return bad request if image creation failed due to business rules
             if (!result.IsSuccess) 
             {
                 return BadRequest(result);
             }
 
+            // Return 201 Created with the result
             return CreatedAtAction(nameof(Post), result);
         }
         catch (Exception ex)
